@@ -13,11 +13,9 @@ var COLUMN_MAX_HEIGHT = 150;
 var textHeight = FONT_GAP + GAP;
 
 var getRandomSaturation = function () {
-  var hue = 240;
   var saturation = Math.floor(Math.random() * 100) + 1;
-  var lightness = 50;
 
-  return 'hsl(' + hue + ', ' + saturation + '%, ' + lightness + '%)';
+  return 'hsl(240, ' + saturation + '%, 50%)';
 };
 
 var renderCloud = function (ctx, x, y, color) {
@@ -25,14 +23,8 @@ var renderCloud = function (ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-var getMaxElement = function (arr) {
-  var maxElement = arr[0];
-
-  for (var i = 1; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
-    }
-  }
+var getMaxElement = function (times) {
+  var maxElement = Math.max.apply(null, times);
 
   return maxElement;
 };
@@ -50,16 +42,20 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
+    var xPosition = CLOUD_X + GAP + (COLUMN_WIDTH + COLUMN_GAP) * i;
+    var yPosition = CLOUD_Y + CLOUD_HEIGHT;
+    var columnHeight = COLUMN_MAX_HEIGHT * times[i] / maxTime;
+
     ctx.fillStyle = '#000000';
-    ctx.fillText(Math.round(times[i]), CLOUD_X + GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - textHeight - GAP - (COLUMN_MAX_HEIGHT * times[i]) / maxTime - GAP);
-    ctx.fillText(players[i], CLOUD_X + GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - GAP);
+    ctx.fillText(Math.round(times[i]), xPosition, yPosition - textHeight - GAP - columnHeight - GAP);
+    ctx.fillText(players[i], xPosition, yPosition - GAP);
 
     if (players[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-      ctx.fillRect(CLOUD_X + GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - textHeight - GAP - (COLUMN_MAX_HEIGHT * times[i]) / maxTime, COLUMN_WIDTH, (COLUMN_MAX_HEIGHT * times[i]) / maxTime);
+      ctx.fillRect(xPosition, yPosition - textHeight - GAP - columnHeight, COLUMN_WIDTH, columnHeight);
     } else {
       ctx.fillStyle = getRandomSaturation();
-      ctx.fillRect(CLOUD_X + GAP + (COLUMN_WIDTH + COLUMN_GAP) * i, CLOUD_Y + CLOUD_HEIGHT - textHeight - GAP - (COLUMN_MAX_HEIGHT * times[i]) / maxTime, COLUMN_WIDTH, (COLUMN_MAX_HEIGHT * times[i]) / maxTime);
+      ctx.fillRect(xPosition, yPosition - textHeight - GAP - columnHeight, COLUMN_WIDTH, columnHeight);
     }
   }
 };
