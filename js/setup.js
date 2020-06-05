@@ -1,6 +1,7 @@
 'use strict';
 
-var WIZARD_NAMES = ['Иван',
+var WIZARD_NAMES = [
+  'Иван',
   'Хуан Себастьян',
   'Мария',
   'Кристоф',
@@ -10,7 +11,8 @@ var WIZARD_NAMES = ['Иван',
   'Вашингтон'
 ];
 
-var WIZARD_SURNAMES = ['да Марья',
+var WIZARD_SURNAMES = [
+  'да Марья',
   'Верон',
   'Мирабелла',
   'Вальц',
@@ -20,7 +22,8 @@ var WIZARD_SURNAMES = ['да Марья',
   'Ирвинг'
 ];
 
-var COAT_COLORS = ['rgb(101, 137, 164)',
+var COAT_COLORS = [
+  'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
   'rgb(56, 159, 117)',
@@ -28,7 +31,8 @@ var COAT_COLORS = ['rgb(101, 137, 164)',
   'rgb(0, 0, 0)'
 ];
 
-var EYES_COLORS = ['black',
+var EYES_COLORS = [
+  'black',
   'red',
   'blue',
   'yellow',
