@@ -1,38 +1,52 @@
 'use strict';
 
-var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_NAMES = ['Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон'
+];
+
+var WIZARD_SURNAMES = ['да Марья',
+  'Верон',
+  'Мирабелла',
+  'Вальц',
+  'Онопко',
+  'Топольницкая',
+  'Нионго',
+  'Ирвинг'
+];
+
+var COAT_COLORS = ['rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+
+var EYES_COLORS = ['black',
+  'red',
+  'blue',
+  'yellow',
+  'green'
+];
+
 var WIZARDS_NUMBER = 4;
 
-var getRandomName = function () {
-  var randomName = Math.floor(Math.random() * WIZARD_NAMES.length);
-  return WIZARD_NAMES[randomName];
-};
-
-var getRandomSurname = function () {
-  var randomSurname = Math.floor(Math.random() * WIZARD_SURNAMES.length);
-  return WIZARD_SURNAMES[randomSurname];
-};
-
-var getRandomCoatColor = function () {
-  var randomCoatColor = Math.floor(Math.random() * COAT_COLORS.length);
-  return COAT_COLORS[randomCoatColor];
-};
-
-var getRandomEyesColor = function () {
-  var randomEyesColor = Math.floor(Math.random() * EYES_COLORS.length);
-  return EYES_COLORS[randomEyesColor];
+var getRandomElement = function (array) {
+  return array[Math.floor(Math.random() * array.length)];
 };
 
 var getWizardObject = function () {
-  var wizardObject = {
-    name: getRandomName() + ' ' + getRandomSurname(),
-    coatColor: getRandomCoatColor(),
-    eyesColor: getRandomEyesColor()
+  return {
+    name: getRandomElement(WIZARD_NAMES) + ' ' + getRandomElement(WIZARD_SURNAMES),
+    coatColor: getRandomElement(COAT_COLORS),
+    eyesColor: getRandomElement(EYES_COLORS)
   };
-  return wizardObject;
 };
 
 var wizards = [];
