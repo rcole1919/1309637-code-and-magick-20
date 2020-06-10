@@ -39,6 +39,14 @@ var EYES_COLORS = [
   'green'
 ];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var WIZARDS_NUMBER = 4;
 
 var getRandomElement = function (array) {
@@ -59,7 +67,7 @@ for (var j = 0; j < WIZARDS_NUMBER; j++) {
 }
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+// userDialog.classList.remove('hidden');
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
@@ -84,3 +92,71 @@ for (var i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+// Пытался подставлять условие проверки фокуса поля ввода имени в событие нажатия кнопки escape, но ни одно не работало - либо событие ломалось, либо окно всё равно закрывалось при фокусе на имени
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
+
+var wizardCoat = document.querySelector('.wizard-coat');
+var wizardEyes = document.querySelector('.wizard-eyes');
+var fireball = document.querySelector('.setup-fireball-wrap');
+
+wizardCoat.addEventListener('click', function () {
+  wizardCoat.style.fill = getRandomElement(COAT_COLORS);
+  document.querySelector('input[name="coat-color"]').value = wizardCoat.style.fill;
+});
+
+wizardEyes.addEventListener('click', function () {
+  wizardEyes.style.fill = getRandomElement(EYES_COLORS);
+  document.querySelector('input[name="eyes-color"]').value = wizardEyes.style.fill;
+});
+
+// Ниже логика подстановки цвета в value такая же, но подставляем мы цвет в hex, а на сервер почему то уходит значение в rgb и при отправке формы выдается ошибка о том, что значение должно быть как в задании - в одном из пяти значений в hex
+
+fireball.addEventListener('click', function () {
+  fireball.style.background = getRandomElement(FIREBALL_COLORS);
+  document.querySelector('input[name="fireball-color"]').value = fireball.style.background;
+});
+
