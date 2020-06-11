@@ -1,38 +1,64 @@
 'use strict';
 
-var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_NAMES = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон'
+];
+
+var WIZARD_SURNAMES = [
+  'да Марья',
+  'Верон',
+  'Мирабелла',
+  'Вальц',
+  'Онопко',
+  'Топольницкая',
+  'Нионго',
+  'Ирвинг'
+];
+
+var COAT_COLORS = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+
+var EYES_COLORS = [
+  'black',
+  'red',
+  'blue',
+  'yellow',
+  'green'
+];
+
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var WIZARDS_NUMBER = 4;
 
-var getRandomName = function () {
-  var randomName = Math.floor(Math.random() * WIZARD_NAMES.length);
-  return WIZARD_NAMES[randomName];
-};
-
-var getRandomSurname = function () {
-  var randomSurname = Math.floor(Math.random() * WIZARD_SURNAMES.length);
-  return WIZARD_SURNAMES[randomSurname];
-};
-
-var getRandomCoatColor = function () {
-  var randomCoatColor = Math.floor(Math.random() * COAT_COLORS.length);
-  return COAT_COLORS[randomCoatColor];
-};
-
-var getRandomEyesColor = function () {
-  var randomEyesColor = Math.floor(Math.random() * EYES_COLORS.length);
-  return EYES_COLORS[randomEyesColor];
+var getRandomElement = function (array) {
+  return array[Math.floor(Math.random() * array.length)];
 };
 
 var getWizardObject = function () {
-  var wizardObject = {
-    name: getRandomName() + ' ' + getRandomSurname(),
-    coatColor: getRandomCoatColor(),
-    eyesColor: getRandomEyesColor()
+  return {
+    name: getRandomElement(WIZARD_NAMES) + ' ' + getRandomElement(WIZARD_SURNAMES),
+    coatColor: getRandomElement(COAT_COLORS),
+    eyesColor: getRandomElement(EYES_COLORS)
   };
-  return wizardObject;
 };
 
 var wizards = [];
@@ -41,7 +67,7 @@ for (var j = 0; j < WIZARDS_NUMBER; j++) {
 }
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+// userDialog.classList.remove('hidden');
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
@@ -66,3 +92,71 @@ for (var i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+// Пытался подставлять условие проверки фокуса поля ввода имени в событие нажатия кнопки escape, но ни одно не работало - либо событие ломалось, либо окно всё равно закрывалось при фокусе на имени
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
+
+var wizardCoat = document.querySelector('.wizard-coat');
+var wizardEyes = document.querySelector('.wizard-eyes');
+var fireball = document.querySelector('.setup-fireball-wrap');
+
+wizardCoat.addEventListener('click', function () {
+  wizardCoat.style.fill = getRandomElement(COAT_COLORS);
+  document.querySelector('input[name="coat-color"]').value = wizardCoat.style.fill;
+});
+
+wizardEyes.addEventListener('click', function () {
+  wizardEyes.style.fill = getRandomElement(EYES_COLORS);
+  document.querySelector('input[name="eyes-color"]').value = wizardEyes.style.fill;
+});
+
+// Ниже логика подстановки цвета в value такая же, но подставляем мы цвет в hex, а на сервер почему то уходит значение в rgb и при отправке формы выдается ошибка о том, что значение должно быть как в задании - в одном из пяти значений в hex
+
+fireball.addEventListener('click', function () {
+  fireball.style.background = getRandomElement(FIREBALL_COLORS);
+  document.querySelector('input[name="fireball-color"]').value = fireball.style.background;
+});
+
