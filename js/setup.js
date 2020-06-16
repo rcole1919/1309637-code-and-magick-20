@@ -96,15 +96,14 @@ userDialog.querySelector('.setup-similar').classList.remove('hidden');
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
+var setupUserName = document.querySelector('.setup-user-name');
 
 var onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape' && setupUserName !== document.activeElement) {
     evt.preventDefault();
     closePopup();
   }
 };
-
-// Пытался подставлять условие проверки фокуса поля ввода имени в событие нажатия кнопки escape, но ни одно не работало - либо событие ломалось, либо окно всё равно закрывалось при фокусе на имени
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -115,7 +114,6 @@ var openPopup = function () {
 
 var closePopup = function () {
   setup.classList.add('hidden');
-
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
@@ -144,19 +142,20 @@ var wizardEyes = document.querySelector('.wizard-eyes');
 var fireball = document.querySelector('.setup-fireball-wrap');
 
 wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = getRandomElement(COAT_COLORS);
-  document.querySelector('input[name="coat-color"]').value = wizardCoat.style.fill;
+  var color = getRandomElement(COAT_COLORS);
+  wizardCoat.style.fill = color;
+  document.querySelector('input[name="coat-color"]').value = color;
 });
 
 wizardEyes.addEventListener('click', function () {
-  wizardEyes.style.fill = getRandomElement(EYES_COLORS);
-  document.querySelector('input[name="eyes-color"]').value = wizardEyes.style.fill;
+  var color = getRandomElement(EYES_COLORS);
+  wizardEyes.style.fill = color;
+  document.querySelector('input[name="eyes-color"]').value = color;
 });
 
-// Ниже логика подстановки цвета в value такая же, но подставляем мы цвет в hex, а на сервер почему то уходит значение в rgb и при отправке формы выдается ошибка о том, что значение должно быть как в задании - в одном из пяти значений в hex
-
 fireball.addEventListener('click', function () {
-  fireball.style.background = getRandomElement(FIREBALL_COLORS);
-  document.querySelector('input[name="fireball-color"]').value = fireball.style.background;
+  var color = getRandomElement(FIREBALL_COLORS);
+  fireball.style.background = color;
+  document.querySelector('input[name="fireball-color"]').value = color;
 });
 
