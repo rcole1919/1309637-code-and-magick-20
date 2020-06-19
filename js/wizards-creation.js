@@ -7,14 +7,14 @@
 
   var getWizardObject = function () {
     return {
-      name: getRandomElement(window.const.WIZARD_NAMES) + ' ' + getRandomElement(window.const.WIZARD_SURNAMES),
-      coatColor: getRandomElement(window.const.COAT_COLORS),
-      eyesColor: getRandomElement(window.const.EYES_COLORS)
+      name: getRandomElement(window.setupConst.WIZARD_NAMES) + ' ' + getRandomElement(window.setupConst.WIZARD_SURNAMES),
+      coatColor: getRandomElement(window.setupConst.COAT_COLORS),
+      eyesColor: getRandomElement(window.setupConst.EYES_COLORS)
     };
   };
 
   var wizards = [];
-  for (var j = 0; j < window.const.WIZARDS_NUMBER; j++) {
+  for (var j = 0; j < window.setupConst.WIZARDS_NUMBER; j++) {
     wizards.push(getWizardObject());
   }
 
@@ -43,4 +43,8 @@
   similarListElement.appendChild(fragment);
 
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+  window.wizardsCreation = {
+    getRandomElement: getRandomElement
+  };
 })();

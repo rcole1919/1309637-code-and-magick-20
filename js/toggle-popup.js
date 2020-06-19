@@ -22,6 +22,8 @@
 
   var closePopup = function () {
     setup.classList.add('hidden');
+    setup.style.top = '';
+    setup.style.left = '';
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
@@ -44,4 +46,8 @@
       closePopup();
     }
   });
+
+  window.togglePopup = {
+    setup: setup
+  };
 })();

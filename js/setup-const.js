@@ -50,7 +50,7 @@
 
   var WIZARDS_NUMBER = 4;
 
-  window.const = {
+  window.setupConst = {
     WIZARD_NAMES: WIZARD_NAMES,
     WIZARD_SURNAMES: WIZARD_SURNAMES,
     COAT_COLORS: COAT_COLORS,
