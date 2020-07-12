@@ -36,15 +36,15 @@
     }));
   };
 
-  var onEyesChange = function (color) {
+  var onEyesChange = window.debounce(function (color) {
     eyesColor = color;
     updateWizards();
-  };
+  });
 
-  var onCoatChange = function (color) {
+  var onCoatChange = window.debounce(function (color) {
     coatColor = color;
     updateWizards();
-  };
+  });
 
   var successHandler = function (data) {
     wizards = data;
